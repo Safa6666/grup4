@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصور والقصص - نظام التطبيقات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>📱 نظام التطبيقات</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="home.html">🏠 الرئيسية</a></li>
+                <li><a href="AboutUs.html">👥 من نحن</a></li>
+                <li><a href="apps.html">📱 التطبيقات</a></li>
+                <li><a href="gallery.html" class="active">🖼️ الصور والقصص</a></li>
+                <li><a href="add_app.html">➕ إضافة تطبيق</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="main-content">
+            <h2>🖼️ معرض الصور والقصص</h2>
+            <p class="section-description">استمتع بمجموعة من الصور والقصص التفاعلية</p>
+
+            <!-- معرض الصور -->
+            <h3 class="section-title">🎨 معرض الصور</h3>
+            <div class="gallery">
+                <div class="gallery-item" onclick="showImageDetails('تطبيقات المستقبل')">
+                    <div class="gallery-icon">🚀</div>
+                    <h4>تطبيقات المستقبل</h4>
+                    <p>أحدث التطبيقات التكنولوجية</p>
+                </div>
+                <div class="gallery-item" onclick="showImageDetails('التعليم الإلكتروني')">
+                    <div class="gallery-icon">🎓</div>
+                    <h4>التعليم الإلكتروني</h4>
+                    <p>تطبيقات التعلم عن بعد</p>
+                </div>
+                <div class="gallery-item" onclick="showImageDetails('التجارة الإلكترونية')">
+                    <div class="gallery-icon">🛒</div>
+                    <h4>التجارة الإلكترونية</h4>
+                    <p>منصات التسوق الإلكتروني</p>
+                </div>
+                <div class="gallery-item" onclick="showImageDetails('الصحة الرقمية')">
+                    <div class="gallery-icon">🏥</div>
+                    <h4>الصحة الرقمية</h4>
+                    <p>تطبيقات الرعاية الصحية</p>
+                </div>
+                <div class="gallery-item" onclick="showImageDetails('الترفيه')">
+                    <div class="gallery-icon">🎮</div>
+                    <h4>الترفيه</h4>
+                    <p>تطبيقات الألعاب والترفيه</p>
+                </div>
+                <div class="gallery-item" onclick="showImageDetails('الذكاء الاصطناعي')">
+                    <div class="gallery-icon">🤖</div>
+                    <h4>الذكاء الاصطناعي</h4>
+                    <p>تطبيقات AI متقدمة</p>
+                </div>
+            </div>
+
+            <!-- القصص -->
+            <h3 class="section-title">📖 قصص النجاح</h3>
+            <div class="stories">
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="story-avatar">م</div>
+                        <div>
+                            <h4>محمد أحمد</h4>
+                            <p class="story-role">مطور تطبيقات</p>
+                        </div>
+                    </div>
+                    <p>"هذا النظام ساعدني في تنظيم جميع تطبيقاتي بشكل رائع. أصبحت أدارة مشاريعي بسهولة و كفاءة عالية."</p>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="story-avatar">ف</div>
+                        <div>
+                            <h4>فاطمة علي</h4>
+                            <p class="story-role">مديرة مشاريع</p>
+                        </div>
+                    </div>
+                    <p>"الواجهة العربية ساعدت فريقنا على فهم النظام بسرعة. خاصية البحث المتقدم وفرت علينا الكثير من الوقت."</p>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="story-avatar">خ</div>
+                        <div>
+                            <h4>خالد سعيد</h4>
+                            <p class="story-role">رائد أعمال</p>
+                        </div>
+                    </div>
+                    <p>"من خلال هذا النظام تمكنت من متابعة جميع تطبيقات شركتي في مكان واحد. الأداء ممتاز والتصميم أنيق."</p>
+                </div>
+            </div>
+
+            <!-- إضافة صورة جديدة -->
+            <h3 class="section-title">➕ أضف صورتك</h3>
+            <div class="add-image-form">
+                <form id="imageForm">
+                    <div class="form-group">
+                        <label for="imageTitle">عنوان الصورة</label>
+                        <input type="text" id="imageTitle" placeholder="أدخل عنوان للصورة..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageDescription">وصف الصورة</label>
+                        <textarea id="imageDescription" rows="3" placeholder="أدخل وصف للصورة..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageCategory">فئة الصورة</label>
+                        <select id="imageCategory" required>
+                            <option value="">اختر الفئة</option>
+                            <option value="تطبيقات">تطبيقات</option>
+                            <option value="تصميم">تصميم</option>
+                            <option value="تطوير">تطوير</option>
+                            <option value="أخرى">أخرى</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">إضافة الصورة</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 نظام إدارة التطبيقات - تم التطوير بواسطة طلاب الجامعة</p>
+    </footer>
+
+    <script src="myFunctions.js"></script>
+</body>
+</html>

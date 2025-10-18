@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartScope - التطبيقات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="aboutus.html">من نحن</a></li>
+                <li><a href="apps.html">التطبيقات</a></li>
+                <li><a href="add_app.html">إضافة تطبيق</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="apps-section">
+            <h1>تطبيقات الذكاء الاصطناعي</h1>
+            
+            <div class="apps-controls">
+                <button id="showAllDetails" class="btn-secondary">إظهار كل التفاصيل</button>
+                <button id="hideAllDetails" class="btn-secondary">إخفاء كل التفاصيل</button>
+            </div>
+            
+            <table id="appsTable" class="apps-table">
+                <thead>
+                    <tr>
+                        <th>اسم التطبيق</th>
+                        <th>اسم الشركة المطورة</th>
+                        <th>مجال الاستخدام</th>
+                        <th>مجاني/غير مجاني</th>
+                        <th>إظهار التفاصيل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ChatGPT</td>
+                        <td>OpenAI</td>
+                        <td>Education</td>
+                        <td>مجاني</td>
+                        <td><input type="checkbox" class="show-details" data-app="0"></td>
+                    </tr>
+                    <tr>
+                        <td>Midjourney</td>
+                        <td>Midjourney Inc</td>
+                        <td>Design</td>
+                        <td>غير مجاني</td>
+                        <td><input type="checkbox" class="show-details" data-app="1"></td>
+                    </tr>
+                    <tr>
+                        <td>Google Bard</td>
+                        <td>Google</td>
+                        <td>Education</td>
+                        <td>مجاني</td>
+                        <td><input type="checkbox" class="show-details" data-app="2"></td>
+                    </tr>
+                    <tr>
+                        <td>Alexa</td>
+                        <td>Amazon</td>
+                        <td>E-Commerce</td>
+                        <td>مجاني</td>
+                        <td><input type="checkbox" class="show-details" data-app="3"></td>
+                    </tr>
+                    <tr>
+                        <td>IBM Watson</td>
+                        <td>IBM</td>
+                        <td>Healthcare</td>
+                        <td>غير مجاني</td>
+                        <td><input type="checkbox" class="show-details" data-app="4"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="dynamicAppsContainer"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 SmartScope. جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="myFunctions.js"></script>
+</body>
+</html>
