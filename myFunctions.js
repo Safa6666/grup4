@@ -59,23 +59,20 @@ const appsData = [
 
 // دالة التهيئة عند تحميل الصفحة
 $(document).ready(function() {
-    console.log("✅ تم تحميل الموقع - SmartScope");
+    console.log("تم تحميل الموقع بنجاح - SmartScope");
     
     // التعامل مع صفحة التطبيقات
-    if (window.location.href.indexOf('apps.html') > -1) {
-        console.log("🔄 تهيئة صفحة التطبيقات");
+    if (window.location.pathname.includes('apps.html') || window.location.pathname.endsWith('apps.html')) {
         initAppsPage();
     }
 
     // التعامل مع صفحة إضافة التطبيق
-    if (window.location.href.indexOf('add_app.html') > -1) {
-        console.log("🔄 تهيئة صفحة إضافة التطبيق");
+    if (window.location.pathname.includes('add_app.html') || window.location.pathname.endsWith('add_app.html')) {
         initAddAppPage();
     }
 
     // التعامل مع الصفحة الرئيسية
-    if (window.location.href.indexOf('index.html') > -1 || window.location.pathname === '/' || window.location.href.endsWith('/')) {
-        console.log("🔄 تهيئة الصفحة الرئيسية");
+    if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
         initHomePage();
     }
 
@@ -85,54 +82,41 @@ $(document).ready(function() {
 
 // تهيئة صفحة التطبيقات
 function initAppsPage() {
-    console.log("🔄 بدء تهيئة صفحة التطبيقات");
+    console.log("تهيئة صفحة التطبيقات...");
     
-    // تحميل التطبيقات المخزنة
-    loadStoredApps();
-    
-    // تهيئة الأحداث بعد تحميل الصفحة
-    setTimeout(function() {
-        initAppEvents();
-    }, 100);
-}
-
-// تهيئة أحداث التطبيقات
-function initAppEvents() {
-    console.log("🔗 تهيئة أحداث checkboxes");
-    
-    // حدث checkboxes
-    $(document).on('change', '.show-details', function() {
-        const appIndex = parseInt($(this).data('app'));
-        const isChecked = $(this).is(':checked');
+    // إضافة حدث للتحديدات
+    $('.show-details').off('change').on('change', function() {
+        const appIndex = $(this).data('app');
+        const row = $(this).closest('tr');
+        const detailsId = 'app-details-' + appIndex;
         
-        console.log(`📱 تطبيق ${appIndex} - ${isChecked ? 'مفعل' : 'غير مفعل'}`);
-        
-        if (isChecked) {
+        if (this.checked) {
+            // إخفاء جميع التفاصيل الأخرى أولاً
             $('.app-details-row').remove();
-            showAppDetails(appIndex, $(this).closest('tr'));
+            // إظهار التفاصيل المطلوبة
+            showAppDetails(appIndex, row);
         } else {
-            $('#app-details-' + appIndex).remove();
+            // إخفاء التفاصيل
+            $('#' + detailsId).remove();
         }
     });
     
     // أزرار التحكم
-    $('#showAllDetails').off('click').on('click', showAllDetails);
-    $('#hideAllDetails').off('click').on('click', hideAllDetails);
+    $('#showAllDetails').on('click', showAllDetails);
+    $('#hideAllDetails').on('click', hideAllDetails);
     
-    console.log("✅ تم تهيئة جميع الأحداث");
+    // تحميل أي بيانات مخزنة محلياً
+    loadStoredApps();
 }
 
 // تهيئة صفحة إضافة التطبيق
 function initAddAppPage() {
-    console.log("🔄 تهيئة صفحة إضافة التطبيق");
+    console.log("تهيئة صفحة إضافة التطبيق...");
     
     $('#appForm').off('submit').on('submit', function(e) {
         e.preventDefault();
-        console.log("📨 محاولة إرسال النموذج");
         if (validateForm()) {
             submitForm();
-        } else {
-            console.log("❌ النموذج غير صالح");
         }
     });
 
@@ -151,7 +135,7 @@ function initAddAppPage() {
 
 // تهيئة الصفحة الرئيسية
 function initHomePage() {
-    console.log("🏠 تهيئة الصفحة الرئيسية");
+    console.log("تهيئة الصفحة الرئيسية...");
     // يمكن إضافة أي دوال خاصة بالصفحة الرئيسية هنا
 }
 
@@ -170,7 +154,7 @@ function initNavigationEffects() {
 // إظهار تفاصيل التطبيق
 function showAppDetails(appIndex, row) {
     if (appIndex < 0 || appIndex >= appsData.length) {
-        console.error('❌ رقم التطبيق غير صحيح');
+        console.error('رقم التطبيق غير صحيح:', appIndex);
         return;
     }
     
@@ -181,30 +165,18 @@ function showAppDetails(appIndex, row) {
         <tr id="${detailsId}" class="app-details-row">
             <td colspan="5">
                 <div class="app-details-content">
-                    <h3>📱 ${app.name}</h3>
+                    <h3>📱 تفاصيل تطبيق ${app.name}</h3>
                     <div class="details-grid">
                         <div class="detail-item">
-                            <strong>🌐 الموقع:</strong>
+                            <strong>🌐 الموقع الإلكتروني:</strong>
                             <a href="${app.website}" target="_blank" style="color: #ffeaa7;">${app.website}</a>
                         </div>
                         <div class="detail-item">
-                            <strong>🏢 الشركة:</strong>
-                            <p>${app.company}</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>📊 المجال:</strong>
-                            <p>${app.category}</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>💰 السعر:</strong>
-                            <p>${app.pricing}</p>
-                        </div>
-                        <div class="detail-item">
-                            <strong>📝 الوصف:</strong>
+                            <strong>📝 الشرح المختصر:</strong>
                             <p>${app.description}</p>
                         </div>
                         <div class="detail-item">
-                            <strong>📁 الوسائط:</strong>
+                            <strong>📁 الوسائط المتعددة:</strong>
                             <div class="media-container">
                                 <span class="media-item">${app.logo}</span>
                                 <span class="media-item">${app.audio}</span>
@@ -217,20 +189,25 @@ function showAppDetails(appIndex, row) {
         </tr>
     `;
     
-    $(detailsHTML).insertAfter(row).hide().fadeIn(500);
-    console.log("✅ تم عرض تفاصيل التطبيق: " + app.name);
+    $(detailsHTML).insertAfter(row);
+    
+    // إضافة تأثير الظهور
+    $('#' + detailsId).hide().fadeIn(500);
 }
 
 // إظهار كل التفاصيل
 function showAllDetails() {
-    console.log("👁️ إظهار كل التفاصيل");
     $('.app-details-row').remove();
-    $('.show-details').prop('checked', true).trigger('change');
+    $('.show-details').each(function() {
+        const appIndex = $(this).data('app');
+        const row = $(this).closest('tr');
+        $(this).prop('checked', true);
+        showAppDetails(appIndex, row);
+    });
 }
 
 // إخفاء كل التفاصيل
 function hideAllDetails() {
-    console.log("🙈 إخفاء كل التفاصيل");
     $('.app-details-row').remove();
     $('.show-details').prop('checked', false);
 }
@@ -403,8 +380,6 @@ function submitForm() {
         timestamp: new Date().toISOString()
     };
     
-    console.log("📝 بيانات النموذج:", formData);
-    
     // حفظ البيانات محلياً
     const saveResult = saveAppData(formData);
     
@@ -426,7 +401,7 @@ function resetForm() {
     $('#appForm')[0].reset();
     $('input, select, textarea').removeClass('error').removeClass('success');
     hideMessages();
-    console.log("🔄 تم إعادة تعيين النموذج");
+    console.log("تم إعادة تعيين النموذج");
 }
 
 // حفظ بيانات التطبيق
@@ -435,19 +410,16 @@ function saveAppData(appData) {
         // الحصول على التطبيقات المخزنة مسبقاً
         let storedApps = JSON.parse(localStorage.getItem('smartscope_apps')) || [];
         
-        console.log("💾 التطبيقات المخزنة سابقاً:", storedApps.length);
-        
         // إضافة التطبيق الجديد
         storedApps.push(appData);
         
         // حفظ في localStorage
         localStorage.setItem('smartscope_apps', JSON.stringify(storedApps));
         
-        console.log('✅ تم حفظ التطبيق:', appData.name);
-        console.log('📊 العدد الكلي للتطبيقات:', storedApps.length);
+        console.log('تم حفظ التطبيق:', appData);
         return true;
     } catch (error) {
-        console.error('❌ خطأ في حفظ البيانات:', error);
+        console.error('خطأ في حفظ البيانات:', error);
         return false;
     }
 }
@@ -458,26 +430,25 @@ function loadStoredApps() {
         const storedApps = JSON.parse(localStorage.getItem('smartscope_apps')) || [];
         
         if (storedApps.length > 0) {
-            console.log('📥 تم تحميل التطبيقات المخزنة:', storedApps.length);
+            console.log('تم تحميل التطبيقات المخزنة:', storedApps.length);
             displayStoredApps(storedApps);
-        } else {
-            console.log('📭 لا توجد تطبيقات مخزنة');
         }
         
         return storedApps;
     } catch (error) {
-        console.error('❌ خطأ في تحميل البيانات:', error);
+        console.error('خطأ في تحميل البيانات:', error);
         return [];
     }
 }
 
 // عرض التطبيقات المخزنة
 function displayStoredApps(storedApps) {
+    const container = $('#dynamicAppsContainer');
+    let html = '';
+    
     storedApps.forEach((app, index) => {
         const appNumber = appsData.length + index;
-        
-        // إنشاء صف جديد للجدول
-        const newRow = `
+        html += `
             <tr>
                 <td>${app.name}</td>
                 <td>${app.company}</td>
@@ -486,9 +457,6 @@ function displayStoredApps(storedApps) {
                 <td><input type="checkbox" class="show-details" data-app="${appNumber}"></td>
             </tr>
         `;
-        
-        // إضافة الصف إلى الجدول
-        $('#appsTable tbody').append(newRow);
         
         // إضافة إلى appsData للعرض
         appsData.push({
@@ -504,7 +472,21 @@ function displayStoredApps(storedApps) {
         });
     });
     
-    console.log(`✅ تم عرض ${storedApps.length} تطبيق مخزن`);
+    if (html) {
+        $(html).appendTo('#appsTable tbody');
+        // إعادة ربط الأحداث للتطبيقات الجديدة
+        $('.show-details').off('change').on('change', function() {
+            const appIndex = $(this).data('app');
+            const row = $(this).closest('tr');
+            
+            if (this.checked) {
+                $('.app-details-row').remove();
+                showAppDetails(appIndex, row);
+            } else {
+                $('#app-details-' + appIndex).remove();
+            }
+        });
+    }
 }
 
 // عرض رسالة الخطأ
@@ -546,12 +528,21 @@ function hideMessages() {
     });
 }
 
+// دالة مساعدة لعرض البيانات (لتسهيل debugging)
+function debugData() {
+    console.log('=== SmartScope Debug Info ===');
+    console.log('التطبيقات الأساسية:', appsData);
+    console.log('التطبيقات المخزنة:', loadStoredApps());
+    console.log('============================');
+}
+
 // جعل الدوال متاحة globally للاستدعاء من HTML
 window.validateAppName = validateAppName;
 window.validateCompanyName = validateCompanyName;
 window.validateWebsite = validateWebsite;
 window.validateDescription = validateDescription;
 window.hideMessages = hideMessages;
+window.debugData = debugData;
 window.fillTestData = fillTestData;
 window.showAllDetails = showAllDetails;
 window.hideAllDetails = hideAllDetails;
